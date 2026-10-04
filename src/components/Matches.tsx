@@ -106,9 +106,8 @@ export function Matches() {
                     transition={{ duration: 0.4, delay: i * 0.06 }}
                     className="grid grid-cols-12 items-center gap-2 border-b border-white/5 py-3 text-sm"
                   >
-                    <div className={`col-span-2 flex items-center justify-center font-display text-xl ${
-                      r.result === "W" ? "text-green-400" : r.result === "D" ? "text-yellow-400" : "text-red-400"
-                    }`}>
+                    <div className={`col-span-2 flex items-center justify-center font-display text-xl ${r.result === "W" ? "text-green-400" : r.result === "D" ? "text-yellow-400" : "text-red-400"
+                      }`}>
                       {r.result}
                     </div>
                     <div className="col-span-7 truncate text-white/85">

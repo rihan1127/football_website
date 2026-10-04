@@ -1,21 +1,32 @@
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
-import { useEffect, useRef } from "react";
-import { club } from "../data/site";
+import { useState, useEffect, useRef } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useTransform,
+  useSpring,
+} from "framer-motion";
+import { club, heroSlides } from "../data/site";
+import { LightningIcon } from "./Logo";
 
 export function Hero() {
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+
+  // Mouse parallax motion values
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
+  const xSpring = useSpring(mx, { stiffness: 50, damping: 22 });
+  const ySpring = useSpring(my, { stiffness: 50, damping: 22 });
 
-  const xSpring = useSpring(mx, { stiffness: 60, damping: 20 });
-  const ySpring = useSpring(my, { stiffness: 60, damping: 20 });
-
-  const imgX = useTransform(xSpring, (v) => v * 14);
+  const imgX = useTransform(xSpring, (v) => v * 12);
   const imgY = useTransform(ySpring, (v) => v * 8);
-  const lightX = useTransform(xSpring, (v) => v * 30);
-  const lightY = useTransform(ySpring, (v) => v * 18);
-  const textX = useTransform(xSpring, (v) => v * -6);
+  const lightX = useTransform(xSpring, (v) => v * 25);
+  const lightY = useTransform(ySpring, (v) => v * 15);
+  const textX = useTransform(xSpring, (v) => v * -5);
 
+  // Handle desktop mouse movement
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
       const w = window.innerWidth;
@@ -27,194 +38,321 @@ export function Hero() {
     return () => window.removeEventListener("mousemove", onMove);
   }, [mx, my]);
 
-  const handleMagnetic = (e: React.MouseEvent<HTMLButtonElement>) => {
+  // Slide autoplay timer
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % heroSlides.length);
+    }, 6500);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  // Touch swipe support for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        // swipe left -> next
+        setCurrent((prev) => (prev + 1) % heroSlides.length);
+      } else {
+        // swipe right -> prev
+        setCurrent(
+          (prev) => (prev - 1 + heroSlides.length) % heroSlides.length
+        );
+      }
+    }
+    touchStartX.current = null;
+  };
+
+  const handleMagnetic = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - r.left - r.width / 2;
     const y = e.clientY - r.top - r.height / 2;
-    e.currentTarget.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+    e.currentTarget.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
   };
-  const resetMagnetic = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const resetMagnetic = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.currentTarget.style.transform = "";
   };
 
-  return (
-    <section ref={wrapRef} className="relative h-[100svh] min-h-[760px] w-full overflow-hidden bg-[#050505] noise">
-      {/* Background image with parallax */}
-      <motion.div
-        style={{ x: imgX, y: imgY, scale: 1.05 }}
-        className="absolute inset-0"
-      >
-        <img
-          src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=2400&q=85"
-          alt="Volta FC training"
-          className="h-full w-full object-cover"
-        />
-      </motion.div>
+  const slide = heroSlides[current];
 
-      {/* Dark cinematic gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#050505]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/40" />
+  return (
+    <section
+      className="relative h-[100svh] min-h-[720px] w-full overflow-hidden bg-[#050505] noise"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      aria-label="Hero Carousel"
+    >
+      {/* Background slide transition with parallax */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={slide.id}
+          initial={{ opacity: 0, scale: 1.08 }}
+          animate={{ opacity: 1, scale: 1.02 }}
+          exit={{ opacity: 0, scale: 0.98 }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          style={{ x: imgX, y: imgY }}
+          className="absolute inset-0"
+        >
+          <img
+            src={slide.image}
+            alt={slide.altText}
+            className="h-full w-full object-cover object-center"
+            loading="eager"
+          />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Dark cinematic gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/55 to-[#050505]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent" />
 
       {/* Animated stadium light beams */}
-      <motion.div
-        style={{ x: lightX, y: lightY }}
-        className="absolute inset-0"
-      >
-        <div className="flicker absolute -left-32 top-1/4 h-[60vh] w-[40vw] rotate-12 bg-[radial-gradient(ellipse_at_center,rgba(214,255,59,0.18),transparent_60%)] blur-3xl" />
-        <div className="flicker absolute right-0 top-0 h-[80vh] w-[40vw] -rotate-12 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.12),transparent_60%)] blur-3xl" />
+      <motion.div style={{ x: lightX, y: lightY }} className="absolute inset-0 pointer-events-none">
+        <div className="flicker absolute -left-32 top-1/4 h-[65vh] w-[45vw] rotate-12 bg-[radial-gradient(ellipse_at_center,rgba(214,255,59,0.18),transparent_60%)] blur-3xl" />
+        <div className="flicker absolute right-0 top-0 h-[80vh] w-[40vw] -rotate-12 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.1),transparent_60%)] blur-3xl" />
         <div className="drift absolute left-1/3 top-0 h-[50vh] w-[30vw] bg-[radial-gradient(ellipse_at_center,rgba(214,255,59,0.1),transparent_70%)] blur-3xl" />
       </motion.div>
 
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 30 }).map((_, i) => (
+      {/* Particles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {Array.from({ length: 24 }).map((_, i) => (
           <motion.span
             key={i}
             className="absolute h-[2px] w-[2px] rounded-full bg-white/40"
             initial={{
-              x: `${Math.random() * 100}%`,
-              y: `${Math.random() * 100}%`,
+              x: `${(i * 17) % 100}%`,
+              y: `${(i * 23) % 100}%`,
               opacity: 0,
             }}
             animate={{
-              y: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
-              opacity: [0, 0.8, 0],
+              y: [`${((i * 23) % 100) - 20}%`, `${((i * 23) % 100) + 20}%`],
+              opacity: [0, 0.7, 0],
             }}
             transition={{
-              duration: 6 + Math.random() * 8,
+              duration: 5 + (i % 6),
               repeat: Infinity,
-              delay: Math.random() * 4,
+              delay: (i % 5) * 0.8,
             }}
           />
         ))}
       </div>
 
-      {/* Pitch center line + outer circle (subtle) */}
-      <svg className="absolute inset-0 h-full w-full opacity-20" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
-        <circle cx="960" cy="540" r="180" fill="none" stroke="rgba(214,255,59,0.5)" strokeWidth="1" />
-        <line x1="960" y1="180" x2="960" y2="900" stroke="rgba(214,255,59,0.3)" strokeWidth="1" />
-        <rect x="160" y="340" width="320" height="400" fill="none" stroke="rgba(214,255,59,0.3)" strokeWidth="1" />
-        <rect x="1440" y="340" width="320" height="400" fill="none" stroke="rgba(214,255,59,0.3)" strokeWidth="1" />
+      {/* Animated pitch graphics overlay */}
+      <svg
+        className="absolute inset-0 h-full w-full opacity-15 pointer-events-none"
+        viewBox="0 0 1920 1080"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <circle
+          cx="960"
+          cy="540"
+          r="190"
+          fill="none"
+          stroke="rgba(214,255,59,0.6)"
+          strokeWidth="1"
+        />
+        <line
+          x1="960"
+          y1="100"
+          x2="960"
+          y2="980"
+          stroke="rgba(214,255,59,0.4)"
+          strokeWidth="1"
+        />
+        <rect
+          x="120"
+          y="320"
+          width="340"
+          height="440"
+          fill="none"
+          stroke="rgba(214,255,59,0.3)"
+          strokeWidth="1"
+        />
+        <rect
+          x="1460"
+          y="320"
+          width="340"
+          height="440"
+          fill="none"
+          stroke="rgba(214,255,59,0.3)"
+          strokeWidth="1"
+        />
       </svg>
 
-      {/* Top bar */}
+      {/* Top Metadata Bar */}
       <div className="absolute left-0 right-0 top-24 z-10 px-6 md:px-10">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between font-cond text-[11px] uppercase tracking-[0.4em] text-white/40">
-          <div>Season 2026</div>
-          <div className="hidden md:block">Academy & Professional Pathway</div>
-          <div>Boys & Girls • Ages 9 – 18</div>
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between font-cond text-[11px] uppercase tracking-[0.4em] text-white/50">
+          <div className="flex items-center gap-2 text-[var(--color-accent)]">
+            <LightningIcon className="h-4 w-4" />
+            <span>PIMPRI-CHINCHWAD, PUNE</span>
+          </div>
+          <div className="hidden md:block">
+            STRUCTURED FOOTBALL COACHING • BOYS & GIRLS
+          </div>
+          <div className="text-white/40">AGES 6 – 18</div>
         </div>
       </div>
 
-      {/* Main content */}
-      <div className="relative z-10 flex h-full flex-col justify-end px-6 pb-32 pt-32 md:px-10 md:pb-40">
+      {/* Main Slide Content */}
+      <div className="relative z-10 flex h-full flex-col justify-end px-6 pb-28 pt-28 md:px-10 md:pb-36">
         <div className="mx-auto w-full max-w-[1440px]">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="mb-6 flex items-center gap-3 font-cond text-xs uppercase tracking-[0.4em] text-[var(--color-accent)]"
-          >
-            <span className="h-[1px] w-12 bg-[var(--color-accent)]" />
-            <span>{club.tagline}</span>
-          </motion.div>
-
-          <motion.h1
-            style={{ x: textX }}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display text-[clamp(3.5rem,11vw,10rem)] leading-[0.85] tracking-tight text-white text-balance"
-          >
-            BUILD YOUR <span className="text-stroke">GAME.</span>
-            <br />
-            BUILD YOUR <span className="accent-text text-glow">FUTURE.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.8 }}
-            className="mt-6 max-w-2xl text-base text-white/70 md:text-lg"
-          >
-            Professional football development for the next generation.
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.8 }}
-            className="mt-2 font-cond text-xs uppercase tracking-[0.3em] text-white/40 md:text-sm"
-          >
-            Boys & Girls &nbsp; | &nbsp; Ages 9–18 &nbsp; | &nbsp; Elite Development &nbsp; | &nbsp; Professional Pathway
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3, duration: 0.8 }}
-            className="mt-10 flex flex-wrap items-center gap-4"
-          >
-            <button
-              onMouseMove={handleMagnetic}
-              onMouseLeave={resetMagnetic}
-              className="magnetic shine-btn group relative inline-flex items-center gap-3 rounded-full bg-[var(--color-accent)] px-7 py-4 font-cond text-xs uppercase tracking-[0.3em] text-black"
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slide.id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-              JOIN THE ACADEMY
-              <span className="transition-transform group-hover:translate-x-1">→</span>
-            </button>
-            <button
-              onMouseMove={handleMagnetic}
-              onMouseLeave={resetMagnetic}
-              className="magnetic shine-btn inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/[0.02] px-7 py-4 font-cond text-xs uppercase tracking-[0.3em] text-white backdrop-blur transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
-            >
-              EXPLORE PROGRAMS
-            </button>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Bottom info bar */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 border-t border-white/10 bg-black/30 backdrop-blur-md">
-        <div className="mx-auto grid max-w-[1440px] grid-cols-2 gap-6 px-6 py-5 md:grid-cols-4 md:px-10">
-          {[
-            { k: "Established", v: "2014" },
-            { k: "Players", v: "240+" },
-            { k: "Coaches", v: "B Licence" },
-            { k: "Pathway", v: "To Pro" },
-          ].map((it, i) => (
-            <div key={i} className="flex items-center gap-4">
-              <div className="font-display text-2xl text-[var(--color-accent)]">0{i + 1}</div>
-              <div className="leading-tight">
-                <div className="font-cond text-[10px] uppercase tracking-[0.3em] text-white/40">{it.k}</div>
-                <div className="font-cond text-sm uppercase tracking-[0.2em] text-white">{it.v}</div>
+              {/* Eyebrow */}
+              <div className="mb-4 flex items-center gap-3 font-cond text-xs uppercase tracking-[0.4em] text-[var(--color-accent)]">
+                <span className="h-[1px] w-10 bg-[var(--color-accent)]" />
+                <span>{slide.eyebrow}</span>
               </div>
-            </div>
-          ))}
+
+              {/* H1 Heading */}
+              <motion.h1
+                style={{ x: textX }}
+                className="font-display text-[clamp(2.8rem,8.5vw,7.5rem)] leading-[0.88] tracking-tight text-white text-balance"
+              >
+                {slide.headlineLine1}
+                <br />
+                <span className="accent-text text-glow">
+                  {slide.headlineLine2}
+                </span>
+              </motion.h1>
+
+              {/* Subheading */}
+              <p className="mt-5 max-w-2xl text-base text-white/80 md:text-xl font-normal leading-relaxed">
+                {slide.subheading}
+              </p>
+
+              {/* Action Buttons */}
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <a
+                  href={slide.primaryCta.href}
+                  onMouseMove={handleMagnetic}
+                  onMouseLeave={resetMagnetic}
+                  className="magnetic shine-btn group relative inline-flex items-center gap-3 rounded-full bg-[var(--color-accent)] px-8 py-4 font-cond text-xs uppercase tracking-[0.3em] text-black font-semibold transition shadow-[0_0_30px_rgba(214,255,59,0.3)] hover:shadow-[0_0_45px_rgba(214,255,59,0.6)]"
+                >
+                  {slide.primaryCta.text}
+                  <span className="transition-transform group-hover:translate-x-1.5">
+                    →
+                  </span>
+                </a>
+
+                {slide.secondaryCta && (
+                  <a
+                    href={slide.secondaryCta.href}
+                    onMouseMove={handleMagnetic}
+                    onMouseLeave={resetMagnetic}
+                    className="magnetic shine-btn inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/[0.03] px-8 py-4 font-cond text-xs uppercase tracking-[0.3em] text-white backdrop-blur transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                  >
+                    {slide.secondaryCta.text}
+                  </a>
+                )}
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
 
-      {/* Animated scroll indicator */}
+      {/* Slide Navigation & Progress Bar (Bottom Right / Left) */}
+      <div className="absolute bottom-6 left-6 right-6 z-20 md:bottom-10 md:left-10 md:right-10">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-4 border-t border-white/10 pt-4 md:flex-row md:items-center md:justify-between">
+          {/* Slide Numbers & Thumbnails */}
+          <div className="flex items-center gap-6">
+            <div className="flex items-baseline gap-1 font-display text-2xl text-white">
+              <span className="text-[var(--color-accent)]">
+                0{current + 1}
+              </span>
+              <span className="text-xs text-white/40">/ 0{heroSlides.length}</span>
+            </div>
+
+            {/* Slide Tabs */}
+            <div className="flex items-center gap-2">
+              {heroSlides.map((s, idx) => (
+                <button
+                  key={s.id}
+                  onClick={() => setCurrent(idx)}
+                  className={`group relative h-2 transition-all duration-500 rounded-full overflow-hidden ${idx === current ? "w-12 bg-white/20" : "w-4 bg-white/15 hover:bg-white/30"
+                    }`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                >
+                  {idx === current && (
+                    <motion.div
+                      layoutId="slideProgress"
+                      className="h-full bg-[var(--color-accent)]"
+                      initial={{ width: "0%" }}
+                      animate={{ width: isPaused ? "100%" : "100%" }}
+                      transition={{
+                        duration: isPaused ? 0.2 : 6.5,
+                        ease: "linear",
+                      }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Location Badge & Prev/Next Arrows */}
+          <div className="flex items-center justify-between gap-6 md:justify-end">
+            <div className="font-cond text-[10px] uppercase tracking-[0.25em] text-white/50 hidden lg:block">
+              {club.location.facility}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() =>
+                  setCurrent(
+                    (prev) => (prev - 1 + heroSlides.length) % heroSlides.length
+                  )
+                }
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white backdrop-blur transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                aria-label="Previous slide"
+              >
+                ←
+              </button>
+              <button
+                onClick={() =>
+                  setCurrent((prev) => (prev + 1) % heroSlides.length)
+                }
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white backdrop-blur transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                aria-label="Next slide"
+              >
+                →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.8 }}
-        className="absolute right-6 top-1/2 z-10 hidden -translate-y-1/2 flex-col items-center gap-3 md:flex"
+        transition={{ delay: 1.5 }}
+        className="absolute right-6 top-1/2 z-10 hidden -translate-y-1/2 flex-col items-center gap-3 xl:flex pointer-events-none"
       >
-        <div className="font-cond text-[10px] uppercase tracking-[0.4em] text-white/40 vertical-rl">Scroll</div>
-        <div className="relative h-16 w-[1px] overflow-hidden bg-white/10">
+        <div className="font-cond text-[10px] uppercase tracking-[0.4em] text-white/40 vertical-rl">
+          SCROLL
+        </div>
+        <div className="relative h-14 w-[1px] overflow-hidden bg-white/15">
           <motion.div
             animate={{ y: ["-100%", "100%"] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
             className="absolute left-0 top-0 h-1/2 w-full bg-[var(--color-accent)]"
           />
         </div>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity }}
-          className="text-[var(--color-accent)]"
-        >
-          ↓
-        </motion.div>
       </motion.div>
     </section>
   );

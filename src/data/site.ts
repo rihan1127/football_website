@@ -1,312 +1,495 @@
-// CMS-ready data structures. All content here can be replaced/extended by administrators later.
+// Lightning Siuu Academy — Centralized Data File
+// All content here is fully editable by academy management.
 
 export const club = {
-  name: "VOLTA FC",
-  fullName: "Volta Football Club & Academy",
-  tagline: "Elite Football Academy",
-  established: "Est. 2014",
+  name: "LIGHTNING SIUU",
+  fullName: "Lightning Siuu Academy",
+  tagline: "Strike Fast. Play Bold. Rise Like Lightning.",
+  established: "Academy",
   accent: "#d6ff3b",
+  h1Title: "Premium Football Academy in Pimpri-Chinchwad, Pune",
+  heroSubtitle:
+    "Lightning Siuu Academy provides structured football coaching for boys and girls, helping young players build technical ability, tactical understanding, confidence and competitive experience.",
+  location: {
+    facility: "Orchid International School, Chinchwad",
+    address:
+      "Orchid International School, Chinchwad, Next to Luxury Living, Near Yashopuram Housing Society, Pimpri-Chinchwad, Pune, Maharashtra.",
+    city: "Pimpri-Chinchwad, Pune",
+    state: "Maharashtra",
+    pincode: "411019",
+    googleMapsUrl:
+      "https://maps.google.com/?q=Orchid+International+School+Chinchwad+Pune",
+  },
+  contact: {
+    // Editable contact placeholders — provide real details when ready
+    whatsappNumber: "919000000000", // Update with official WhatsApp number
+    whatsappMessage: encodeURIComponent(
+      "Hello Lightning Siuu Academy! I would like to book a football trial session."
+    ),
+    phonePlaceholder: "+91 [Contact Number]",
+    emailPlaceholder: "info@lightningsiuuacademy.com",
+  },
 };
 
 export const nav = [
-  { label: "Academy", href: "#programs" },
+  { label: "Academy", href: "#academy" },
+  { label: "Programs", href: "#programs" },
+  { label: "Boys & Girls", href: "#boys-girls" },
   { label: "Methodology", href: "#methodology" },
-  { label: "Coaches", href: "#coaches" },
+  { label: "Coach", href: "#coach" },
   { label: "Pathway", href: "#pathway" },
-  { label: "News", href: "#news" },
-  { label: "Trials", href: "#trials" },
+  { label: "Why Us", href: "#why-us" },
+  { label: "FAQ", href: "#faq" },
+  { label: "Contact", href: "#contact" },
 ];
+
+export interface HeroSlide {
+  id: number;
+  eyebrow: string;
+  headlineLine1: string;
+  headlineLine2: string;
+  subheading: string;
+  primaryCta: { text: string; href: string };
+  secondaryCta?: { text: string; href: string };
+  image: string;
+  altText: string;
+}
+
+export const heroSlides: HeroSlide[] = [
+  {
+    id: 1,
+    eyebrow: "PIMPRI-CHINCHWAD, PUNE",
+    headlineLine1: "BUILD YOUR GAME.",
+    headlineLine2: "BUILD YOUR FUTURE.",
+    subheading:
+      "Premium football coaching and player development in Pimpri-Chinchwad, Pune.",
+    primaryCta: { text: "BOOK A TRIAL", href: "#trials" },
+    secondaryCta: { text: "EXPLORE PROGRAMS", href: "#programs" },
+    image:
+      "https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=2400&q=85",
+    altText:
+      "Young football players training at Lightning Siuu Academy in Pimpri-Chinchwad",
+  },
+  {
+    id: 2,
+    eyebrow: "LIGHTNING SIUU ACADEMY",
+    headlineLine1: "STRIKE FAST. PLAY BOLD.",
+    headlineLine2: "RISE LIKE LIGHTNING.",
+    subheading:
+      "Structured football training for boys and girls, from grassroots development to competitive performance.",
+    primaryCta: { text: "JOIN LIGHTNING SIUU", href: "#trials" },
+    secondaryCta: { text: "OUR METHODOLOGY", href: "#methodology" },
+    image:
+      "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=2400&q=85",
+    altText:
+      "Youth football player dribbling with ball during structured coaching session in Pune",
+  },
+  {
+    id: 3,
+    eyebrow: "STRUCTURED FOOTBALL COACHING",
+    headlineLine1: "YOUR FOOTBALL",
+    headlineLine2: "JOURNEY STARTS HERE.",
+    subheading:
+      "Technical training. Tactical intelligence. Match experience. Player development.",
+    primaryCta: { text: "BOOK A TRIAL", href: "#trials" },
+    secondaryCta: { text: "MEET THE COACH", href: "#coach" },
+    image:
+      "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=2400&q=85",
+    altText:
+      "Football coaching session for boys and girls at Orchid International School ground in Chinchwad",
+  },
+  {
+    id: 4,
+    eyebrow: "DEVELOPMENT & PERFORMANCE",
+    headlineLine1: "TRAIN WITH PURPOSE.",
+    headlineLine2: "PLAY WITH CONFIDENCE.",
+    subheading:
+      "Football coaching for young players across Chinchwad, Pimpri-Chinchwad and Pune.",
+    primaryCta: { text: "ENQUIRE NOW", href: "#contact" },
+    secondaryCta: { text: "WHY LIGHTNING SIUU", href: "#why-us" },
+    image:
+      "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=2400&q=85",
+    altText:
+      "Young football players practicing tactical drills during academy training session",
+  },
+];
+
+export const localAreas = [
+  { name: "Chinchwad", dist: "Primary Location", tag: "Academy Pitch" },
+  { name: "Pimpri", dist: "PCMC Core", tag: "Serving Families" },
+  { name: "Wakad", dist: "Nearby PCMC", tag: "Serving Families" },
+  { name: "Ravet", dist: "Nearby PCMC", tag: "Serving Families" },
+  { name: "Nigdi", dist: "Nearby PCMC", tag: "Serving Families" },
+  { name: "Akurdi", dist: "Nearby PCMC", tag: "Serving Families" },
+  { name: "Tathawade", dist: "Nearby PCMC", tag: "Serving Families" },
+  { name: "Punawale", dist: "Nearby PCMC", tag: "Serving Families" },
+  { name: "Pimple Saudagar", dist: "Nearby PCMC", tag: "Serving Families" },
+  { name: "Pimple Nilakh", dist: "Nearby PCMC", tag: "Serving Families" },
+  { name: "Thergaon", dist: "Nearby PCMC", tag: "Serving Families" },
+  { name: "Rahatani", dist: "Nearby PCMC", tag: "Serving Families" },
+  { name: "Hinjewadi", dist: "Nearby PCMC", tag: "Serving Families" },
+  { name: "Bhosari", dist: "Nearby PCMC", tag: "Serving Families" },
+];
+
+export const headCoach = {
+  name: "Julekha Salim Bijali",
+  title: "Head Coach & Technical Director",
+  tagline: "Train with experience. Develop with purpose.",
+  credentials: [
+    "C Licence Coach",
+    "All India Player",
+    "National Player",
+    "Maharashtra Team Coach — 2 times",
+  ],
+  bio: "Coach Julekha Salim Bijali brings top-level competitive playing and coaching experience to Lightning Siuu Academy. Having represented Maharashtra and played at the national level as an All India Player, she brings deep insight into technical player development, tactical understanding, and competitive player mindset.",
+  coachingPhilosophy:
+    "Football development is built on strong technical fundamentals, tactical decision-making, physical discipline, and self-confidence. Every young player — boy or girl — deserves structured guidance, encouraging feedback, and competitive opportunity to reach their full potential.",
+  image:
+    "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=1200&q=80", // High quality athletic portrait
+  altText:
+    "Head Coach Julekha Salim Bijali, C Licence Coach and former National Player, leading Lightning Siuu Academy",
+};
 
 export const programs = [
   {
     code: "01",
-    age: "U9 – U10",
+    age: "Ages 6–8",
     title: "FOUNDATION",
-    objective: "Build football fundamentals and a love for the game.",
-    technical: "Ball mastery, first touch, basic passing and dribbling.",
-    tactical: "Spatial awareness and simple decision-making.",
-    physical: "Coordination, balance and movement literacy.",
-    image: "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1200&q=80",
+    objective:
+      "Introduce football fundamentals, motor skills, and fun competition.",
+    technical: "Basic ball mastery, first touch, simple passing and dribbling.",
+    tactical: "Spatial awareness, simple movement into space.",
+    physical: "Agility, coordination, balance, and running mechanics.",
+    mental: "Building confidence, enthusiasm, and sport discipline.",
+    matchExposure: "Fun small-sided games (3v3 / 4v4).",
+    progression: "Prepares young players for structured grassroots training.",
+    image:
+      "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1200&q=80",
   },
   {
     code: "02",
-    age: "U11 – U12",
-    title: "DEVELOPMENT",
-    objective: "Introduce structured possession and team concepts.",
-    technical: "Receiving under pressure, combination play, finishing range.",
-    tactical: "Shape, roles and basic formations (4v4 → 9v9).",
-    physical: "Speed foundations, agility and body strength.",
-    image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1200&q=80",
+    age: "Ages 8–10",
+    title: "GRASSROOTS",
+    objective: "Develop core technical mastery and decision-making.",
+    technical:
+      "Receiving, passing accuracy, 1v1 dribbling moves, shooting technique.",
+    tactical: "Understanding team roles, basic pitch positions.",
+    physical: "Speed, reaction time, body coordination.",
+    mental: "Focus, teamwork, positive communication.",
+    matchExposure: "Small-sided matches (5v5 / 7v7).",
+    progression: "Transition into structured positional play.",
+    image:
+      "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1200&q=80",
   },
   {
     code: "03",
-    age: "U13 – U14",
-    title: "ADVANCED DEVELOPMENT",
-    objective: "Bridge between development and competitive football.",
-    technical: "Two-footed play, aerial duels, set-piece execution.",
-    tactical: "Phases of play, pressing triggers and transitions.",
-    physical: "Periodised strength, sprint work and conditioning.",
-    image: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=1200&q=80",
+    age: "Ages 10–12",
+    title: "DEVELOPMENT",
+    objective: "Refine technical execution under pressure and team shape.",
+    technical:
+      "Passing under pressure, aerial control, two-footed ball mastery.",
+    tactical: "Phases of play, pressing triggers, building from the back.",
+    physical: "Core strength, agility, repeat sprint capacity.",
+    mental: "Resilience, accountability, match focus.",
+    matchExposure: "Competitive 7v7 & 9v9 internal and friendly fixtures.",
+    progression: "Prepares players for full-pitch competitive football.",
+    image:
+      "https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=1200&q=80",
   },
   {
     code: "04",
-    age: "U15 – U16",
-    title: "PERFORMANCE",
-    objective: "High-intensity competitive football with professional habits.",
-    technical: "Position-specific skills, advanced finishing patterns.",
-    tactical: "Game model, opponent analysis, set-play design.",
-    physical: "Power development, repeat-sprint capacity, recovery.",
-    image: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=1200&q=80",
+    age: "Ages 12–14",
+    title: "ADVANCED DEVELOPMENT",
+    objective:
+      "Bridge development football with high-intensity competition.",
+    technical: "Position-specific skills, advanced finishing techniques.",
+    tactical: "Full 11v11 tactics, defensive line coordination, transitions.",
+    physical: "Periodized conditioning, functional speed and power.",
+    mental: "Leadership, competitive mindset, self-evaluation.",
+    matchExposure: "Full 11v11 match play and regional tournament fixtures.",
+    progression: "Transition into high-performance youth football.",
+    image:
+      "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=1200&q=80",
   },
   {
     code: "05",
-    age: "U17 – U18",
-    title: "ELITE PATHWAY",
-    objective: "Final-stage development for senior and professional football.",
-    technical: "High-level execution under fatigue and pressure.",
-    tactical: "Full game model, leadership and team management.",
-    physical: "Senior load management, injury prevention protocols.",
-    image: "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=1200&q=80",
+    age: "Ages 14–16",
+    title: "PERFORMANCE",
+    objective:
+      "High-intensity competitive football with tactical discipline.",
+    technical:
+      "High-speed technical execution, specialized positional drills.",
+    tactical: "Game model execution, opponent analysis, set-piece roles.",
+    physical: "Athletic power, endurance, recovery protocols.",
+    mental: "Pressure management, focus, elite work ethic.",
+    matchExposure: "Competitive league and tournament exposure.",
+    progression: "Entry into elite youth pathway.",
+    image:
+      "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=1200&q=80",
   },
   {
-    code: "PRO",
-    age: "Senior",
-    title: "PROFESSIONAL DEVELOPMENT",
-    objective: "Advanced pathway for professional-level players.",
-    technical: "Elite individual technical refinement.",
-    tactical: "Position-specific tactical intelligence and analysis.",
-    physical: "Professional S&C, nutrition and recovery planning.",
-    image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1200&q=80",
+    code: "06",
+    age: "Ages 16–18",
+    title: "ELITE PATHWAY",
+    objective: "Final preparation for senior competitive football.",
+    technical: "Precision execution under fatigue and intense pressure.",
+    tactical: "Comprehensive tactical awareness and match management.",
+    physical: "Senior load management and injury prevention.",
+    mental: "Professional habits, leadership, performance consistency.",
+    matchExposure: "High-level competition and showcase games.",
+    progression: "Senior team readiness and advanced pathway options.",
+    image:
+      "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1200&q=80",
   },
 ];
 
 export const methodology = [
   {
     code: "01",
-    title: "TECHNICAL",
-    desc: "Ball mastery, passing, first touch, dribbling, finishing.",
-    points: ["First touch", "Passing range", "1v1 dribbling", "Finishing", "Ball mastery"],
+    title: "TECHNICAL MASTERY",
+    desc: "Building effortless ball control, precision passing, first touch, and finishing.",
+    points: [
+      "Ball mastery",
+      "First touch under pressure",
+      "Passing range & accuracy",
+      "1v1 offensive & defensive skills",
+      "Finishing in match scenarios",
+    ],
   },
   {
     code: "02",
-    title: "TACTICAL",
-    desc: "Game intelligence, positioning, decision-making and formations.",
-    points: ["Game reading", "Positioning", "Decision making", "Phases of play", "Formations"],
+    title: "TACTICAL INTELLIGENCE",
+    desc: "Developing game understanding, spatial awareness, and quick decision-making.",
+    points: [
+      "Positional awareness",
+      "Decision-making speed",
+      "Team shape & compact defensive lines",
+      "Attacking transitions",
+      "Game model understanding",
+    ],
   },
   {
     code: "03",
-    title: "PHYSICAL",
-    desc: "Speed, agility, strength, endurance and injury prevention.",
-    points: ["Speed", "Agility", "Strength", "Endurance", "Injury prevention"],
+    title: "PHYSICAL PREPARATION",
+    desc: "Enhancing agility, speed, strength, and movement mechanics for football.",
+    points: [
+      "Speed & acceleration",
+      "Agility & change of direction",
+      "Functional strength & core stability",
+      "Cardiovascular endurance",
+      "Injury prevention exercises",
+    ],
   },
   {
     code: "04",
-    title: "MENTAL",
-    desc: "Confidence, discipline, leadership and competitive mindset.",
-    points: ["Confidence", "Discipline", "Leadership", "Resilience", "Focus"],
+    title: "MENTAL RESILIENCE",
+    desc: "Fostering confidence, discipline, sportsmanship, and leadership on and off the pitch.",
+    points: [
+      "Self-confidence & courage to play",
+      "Discipline & punctuality",
+      "Teamwork & mutual support",
+      "Focus under pressure",
+      "Leadership qualities",
+    ],
   },
   {
     code: "05",
-    title: "PERFORMANCE",
-    desc: "Match analysis, individual development plans and tracking.",
-    points: ["Match analysis", "IDP", "Performance tracking", "Video review", "Reports"],
-  },
-];
-
-export const coaches = [
-  {
-    name: "Head Coach — U18",
-    role: "Academy Director",
-    image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=900&q=80",
-    experience: "12+ Years",
-    badges: ["B Licence", "AFC C", "State Level", "National Level"],
-  },
-  {
-    name: "Senior Coach — U15/U16",
-    role: "Performance Phase Lead",
-    image: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=900&q=80",
-    experience: "9+ Years",
-    badges: ["B Licence", "State Level"],
-  },
-  {
-    name: "Coach — U13/U14",
-    role: "Development Phase",
-    image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=900&q=80",
-    experience: "7+ Years",
-    badges: ["B Licence", "State Level"],
-  },
-  {
-    name: "Coach — U11/U12",
-    role: "Foundation Phase",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80",
-    experience: "6+ Years",
-    badges: ["B Licence", "National Level"],
-  },
-  {
-    name: "Coach — U9/U10",
-    role: "Grassroots Lead",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900&q=80",
-    experience: "5+ Years",
-    badges: ["B Licence", "State Level"],
-  },
-  {
-    name: "Goalkeeping Coach",
-    role: "Specialist — GK Unit",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=900&q=80",
-    experience: "10+ Years",
-    badges: ["GK Licence", "National Level"],
-  },
-  {
-    name: "Performance Coach",
-    role: "Strength & Conditioning",
-    image: "https://images.unsplash.com/photo-1583468982228-19f19164aee2?w=900&q=80",
-    experience: "8+ Years",
-    badges: ["S&C Cert.", "National Level"],
-  },
-  {
-    name: "Girls Academy Lead",
-    role: "Girls Pathway Coach",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=900&q=80",
-    experience: "7+ Years",
-    badges: ["B Licence", "State Level", "National Level"],
+    title: "MATCH PERFORMANCE",
+    desc: "Applying training concepts into real match situations with constructive feedback.",
+    points: [
+      "Structured match play",
+      "Individual progress feedback",
+      "Match video analysis sessions",
+      "Tactical debriefs",
+      "Development tracking",
+    ],
   },
 ];
 
 export const pathway = [
-  { stage: "Grassroots", note: "First introduction to football" },
-  { stage: "Foundation", note: "Technical fundamentals" },
-  { stage: "Development", note: "Structured possession & shape" },
-  { stage: "Competitive", note: "League and tournament football" },
-  { stage: "Elite", note: "High-performance environment" },
-  { stage: "Professional Pathway", note: "Senior & professional opportunities" },
-];
-
-export const performance = [
-  { label: "Technical", value: 82 },
-  { label: "Tactical", value: 76 },
-  { label: "Physical", value: 88 },
-  { label: "Decision Making", value: 81 },
-  { label: "Match Performance", value: 85 },
-];
-
-export const trainingExperiences = [
-  { title: "Passing Exercises", img: "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=900&q=80" },
-  { title: "Shooting Drills", img: "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=900&q=80" },
-  { title: "Small-Sided Games", img: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=900&q=80" },
-  { title: "Tactical Sessions", img: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=900&q=80" },
-  { title: "Fitness Training", img: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=900&q=80" },
-  { title: "Goalkeeper Training", img: "https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?w=900&q=80" },
-  { title: "Match Preparation", img: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=900&q=80" },
-];
-
-export const schedule = [
-  { day: "MONDAY", focus: "Technical Development", note: "Ball mastery, passing & first touch." },
-  { day: "TUESDAY", focus: "Tactical Training", note: "Game model, shape & decision-making." },
-  { day: "WEDNESDAY", focus: "Physical Performance", note: "Speed, agility, strength & conditioning." },
-  { day: "THURSDAY", focus: "Technical + Tactical", note: "Position-specific & phase play." },
-  { day: "FRIDAY", focus: "Match Preparation", note: "Set-pieces, game plan & intensity." },
-  { day: "SATURDAY", focus: "Competitive Match / Assessment", note: "Fixtures, trials & assessment games." },
-];
-
-export const facilities = [
-  { title: "Football Ground", img: "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=1200&q=80" },
-  { title: "Training Pitch", img: "https://images.unsplash.com/photo-1515523110800-9415d13b84a8?w=1200&q=80" },
-  { title: "Goalkeeper Area", img: "https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?w=1200&q=80" },
-  { title: "Strength & Conditioning", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80" },
-  { title: "Recovery Area", img: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&q=80" },
-  { title: "Analysis Room", img: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&q=80" },
-  { title: "Changing Rooms", img: "https://images.unsplash.com/photo-1556056504-5c7696c4c28d?w=1200&q=80" },
-];
-
-export const achievements = [
-  { label: "Championships", value: 0, suffix: "" },
-  { label: "Tournaments", value: 0, suffix: "" },
-  { label: "Player Development", value: 0, suffix: "+" },
-  { label: "State Competitions", value: 0, suffix: "" },
-  { label: "National Competitions", value: 0, suffix: "" },
-];
-
-export const parentPoints = [
-  { title: "Structured Training", desc: "Planned sessions aligned to the academy game model." },
-  { title: "Qualified Coaching", desc: "B Licence coaches with state & national experience." },
-  { title: "Player Tracking", desc: "Individual development plans & progress reports." },
-  { title: "Regular Assessments", desc: "Periodic reviews and parent feedback sessions." },
-  { title: "Match Exposure", desc: "Competitive fixtures and showcase opportunities." },
-  { title: "Safe Environment", desc: "Safeguarding-led culture and structured supervision." },
-  { title: "Coach Communication", desc: "Direct channels with coaching staff." },
-  { title: "Long-Term Pathway", desc: "A clear route from grassroots to professional." },
-];
-
-export const news = [
   {
-    cat: "Trials",
-    title: "Open Trials 2026 — Boys & Girls U9–U18",
-    date: "Jan 18, 2026",
-    img: "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1200&q=80",
-    excerpt: "Registration is now open for the 2026 intake across all age groups.",
+    stage: "DISCOVER",
+    note: "First introduction to structured football for beginners",
   },
   {
-    cat: "Tournament",
-    title: "Academy U16 reach State Cup Final",
-    date: "Jan 12, 2026",
-    img: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=1200&q=80",
-    excerpt: "A composed 2–1 semi-final victory books our place in the State Cup final.",
+    stage: "FOUNDATION",
+    note: "Core technical fundamentals, coordination & motor skills",
   },
   {
-    cat: "Academy",
-    title: "New Performance Lab opens for 2026 season",
-    date: "Jan 06, 2026",
-    img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80",
-    excerpt: "GPS tracking, force-plate testing and integrated IDPs go live this month.",
+    stage: "DEVELOPMENT",
+    note: "Possession, spatial awareness & small-sided match play",
   },
   {
-    cat: "Players",
-    title: "Three academy players selected for National Trials",
-    date: "Dec 22, 2025",
-    img: "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=1200&q=80",
-    excerpt: "Continued progression through the elite pathway recognised nationally.",
+    stage: "COMPETITIVE",
+    note: "Positions, tactical understanding & competitive exposure",
   },
   {
-    cat: "Camps",
-    title: "Elite Performance Camp — February intake",
-    date: "Dec 14, 2025",
-    img: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=1200&q=80",
-    excerpt: "Five-day intensive for U13–U18 players looking to accelerate development.",
+    stage: "PERFORMANCE",
+    note: "High-intensity technical-tactical execution & match play",
   },
   {
-    cat: "Club",
-    title: "Girls Academy announces expanded 2026 schedule",
-    date: "Dec 02, 2025",
-    img: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1200&q=80",
-    excerpt: "Additional fixtures and a dedicated performance pathway for female players.",
+    stage: "ELITE PATHWAY",
+    note: "Advanced player development for senior football readiness",
   },
 ];
 
-export const matches = {
-  upcoming: {
-    home: "VOLTA FC U18",
-    away: "Opponent TBD",
-    competition: "State League",
-    date: "Sat, 25 Jan 2026",
-    time: "16:00",
-    venue: "Volta Training Ground",
+export const whyChooseCards = [
+  {
+    title: "Structured Training Curriculum",
+    desc: "Age-appropriate training modules designed to progress players systematically from foundation to performance.",
+    icon: "LayoutGrid",
   },
-  results: [
-    { home: "VOLTA FC", away: "Opponent", score: "3 – 1", result: "W", date: "Jan 18" },
-    { home: "Opponent", away: "VOLTA FC", score: "1 – 1", result: "D", date: "Jan 11" },
-    { home: "VOLTA FC", away: "Opponent", score: "0 – 2", result: "L", date: "Jan 04" },
-    { home: "Opponent", away: "VOLTA FC", score: "2 – 3", result: "W", date: "Dec 21" },
-  ],
-};
+  {
+    title: "Qualified Coaching Leadership",
+    desc: "Led by C Licence Coach and former National Player Julekha Salim Bijali, ensuring professional standards.",
+    icon: "Award",
+  },
+  {
+    title: "Technical Development Focus",
+    desc: "Emphasis on first touch, ball control, passing accuracy, and 1v1 mastery.",
+    icon: "Target",
+  },
+  {
+    title: "Tactical Game Intelligence",
+    desc: "Teaching players how to read the game, make smart decisions, and understand positions.",
+    icon: "Brain",
+  },
+  {
+    title: "Match Experience",
+    desc: "Regular small-sided games and competitive match fixtures to test training concepts.",
+    icon: "Trophy",
+  },
+  {
+    title: "Player Progress Tracking",
+    desc: "Continuous evaluation and constructive feedback to help each child improve.",
+    icon: "TrendingUp",
+  },
+  {
+    title: "Boys & Girls Development",
+    desc: "Equal opportunity, supportive environment, and dedicated coaching for female and male athletes.",
+    icon: "Users",
+  },
+  {
+    title: "Competitive Mindset",
+    desc: "Fostering sportsmanship, resilience, discipline, and a strong work ethic.",
+    icon: "Zap",
+  },
+  {
+    title: "Long-Term Football Pathway",
+    desc: "Clear progression stages keeping players engaged and motivated as they grow.",
+    icon: "Compass",
+  },
+];
 
-export const gallery = [
-  { src: "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1200&q=80", title: "Senior Training Session", date: "Jan 18, 2026" },
-  { src: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=1200&q=80", title: "U16 Tactical Session", date: "Jan 14, 2026" },
-  { src: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1200&q=80", title: "Strength & Conditioning", date: "Jan 10, 2026" },
-  { src: "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=1200&q=80", title: "Match Preparation", date: "Jan 06, 2026" },
-  { src: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=1200&q=80", title: "Set-Piece Training", date: "Dec 28, 2025" },
-  { src: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1200&q=80", title: "Girls Academy Session", date: "Dec 22, 2025" },
-  { src: "https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?w=1200&q=80", title: "Goalkeeper Unit", date: "Dec 15, 2025" },
-  { src: "https://images.unsplash.com/photo-1515523110800-9415d13b84a8?w=1200&q=80", title: "Training Pitch Aerial", date: "Dec 09, 2025" },
-  { src: "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=1200&q=80", title: "Match Day Atmosphere", date: "Dec 02, 2025" },
+export const weeklySchedule = [
+  {
+    day: "MONDAY",
+    focus: "Technical Mastery & Ball Control",
+    note: "First touch, passing accuracy, dribbling and 1v1 skill development.",
+  },
+  {
+    day: "TUESDAY",
+    focus: "Tactical Positioning & Shape",
+    note: "Game reading, positional movement, build-up play, and team compactness.",
+  },
+  {
+    day: "WEDNESDAY",
+    focus: "Physical Agility & Movement",
+    note: "Speed, footwork, coordination, core strength, and injury prevention.",
+  },
+  {
+    day: "THURSDAY",
+    focus: "Attacking & Finishing Patterns",
+    note: "Combination play, crossing, shooting technique, and decision-making in the final third.",
+  },
+  {
+    day: "FRIDAY",
+    focus: "Match Preparation & Intensity",
+    note: "Small-sided games, set-piece organization, and high-intensity match scenarios.",
+  },
+  {
+    day: "SATURDAY",
+    focus: "Competitive Match Exposure / Assessment",
+    note: "Internal matches, friendly fixtures, assessment sessions, and progress tracking.",
+  },
+];
+
+export const parentExpectations = [
+  {
+    title: "Structured & Planned Training",
+    desc: "Every session is carefully planned with clear learning objectives for each age group.",
+  },
+  {
+    title: "Experienced Coaching Staff",
+    desc: "Coaching led by C Licence & former National player with state coaching experience.",
+  },
+  {
+    title: "Safe & Encouraging Environment",
+    desc: "Positive atmosphere where young players feel confident to try, learn, and grow.",
+  },
+  {
+    title: "Balanced Development",
+    desc: "Focus on technical skills, physical fitness, sportsmanship, and discipline.",
+  },
+  {
+    title: "Open Coach Communication",
+    desc: "Clear updates on your child's development, attendance, and progress.",
+  },
+  {
+    title: "Equality for Boys & Girls",
+    desc: "Dedicated attention and equal training opportunities for both female and male players.",
+  },
+];
+
+export const faqs = [
+  {
+    question: "What age can my child start football training at Lightning Siuu Academy?",
+    answer:
+      "Children can join Lightning Siuu Academy starting from age 6 (Foundation Program) up to age 18 (Elite Pathway). We offer structured groups tailored specifically to each age and development stage.",
+  },
+  {
+    question: "Where is Lightning Siuu Academy located?",
+    answer:
+      "Our main training ground is located at Orchid International School, Chinchwad, Next to Luxury Living, Near Yashopuram Housing Society, Pimpri-Chinchwad, Pune, Maharashtra.",
+  },
+  {
+    question: "Is Lightning Siuu Academy in Pimpri-Chinchwad?",
+    answer:
+      "Yes, Lightning Siuu Academy is physically located in Chinchwad, Pimpri-Chinchwad (PCMC), Pune, making it conveniently accessible for families across PCMC and Pune.",
+  },
+  {
+    question: "Do you provide football coaching for girls?",
+    answer:
+      "Yes! Lightning Siuu Academy provides structured football coaching for both boys and girls. We believe every player deserves equal opportunity, encouragement, and high-quality coaching to excel in football.",
+  },
+  {
+    question: "Do beginners need previous football experience?",
+    answer:
+      "No previous experience is required for beginner programs (Foundation & Grassroots). Our qualified coaches teach fundamental skills from scratch, building ball confidence step-by-step.",
+  },
+  {
+    question: "How often are football training sessions conducted?",
+    answer:
+      "Training sessions are conducted multiple days per week depending on the program level, ranging from 3 to 5 weekly sessions plus weekend match play/assessments.",
+  },
+  {
+    question: "What should my child bring to football training?",
+    answer:
+      "Players should wear suitable sportswear, football studs/turf shoes, shin guards, and bring a personal water bottle. Official academy kit guidance is provided upon registration.",
+  },
+  {
+    question: "How can I book a football trial session?",
+    answer:
+      "You can book a trial session by filling out the online Trial Booking Form on our website or contacting us directly via WhatsApp / phone enquiry.",
+  },
+  {
+    question: "Which areas of Pune and PCMC do you serve?",
+    answer:
+      "We serve young players and families from Chinchwad, Pimpri, Wakad, Ravet, Nigdi, Akurdi, Tathawade, Punawale, Pimple Saudagar, Pimple Nilakh, Thergaon, Rahatani, Hinjewadi, Bhosari, and surrounding Pune regions.",
+  },
+  {
+    question: "Do players get match exposure?",
+    answer:
+      "Yes! Match play is an integral part of our curriculum. Players participate in regular internal small-sided games, friendly matches, and age-appropriate competitive fixtures.",
+  },
 ];

@@ -1,35 +1,56 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { club } from "../data/site";
+import { LightningIcon } from "./Logo";
 
 export function Contact() {
-  const items = [
-    { k: "Phone", v: "+1 (000) 000 — 0000" },
-    { k: "Email", v: "academy@voltafc.com" },
-    { k: "Training Location", v: "Volta Training Ground" },
-    { k: "Office Hours", v: "Mon–Sat • 09:00 — 19:00" },
-  ];
+  // Inject JSON-LD Schema for SportsClub / LocalBusiness
+  useEffect(() => {
+    const localBusinessSchema = {
+      "@context": "https://schema.org",
+      "@type": "SportsClub",
+      "name": club.fullName,
+      "description": club.heroSubtitle,
+      "url": window.location.origin,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Orchid International School, Chinchwad, Next to Luxury Living, Near Yashopuram Housing Society",
+        "addressLocality": "Pimpri-Chinchwad",
+        "addressRegion": "Maharashtra",
+        "postalCode": "411019",
+        "addressCountry": "IN",
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "18.6298",
+        "longitude": "73.7997",
+      },
+      "hasMap": club.location.googleMapsUrl,
+    };
 
-  const handleMagnetic = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - r.left - r.width / 2;
-    const y = e.clientY - r.top - r.height / 2;
-    e.currentTarget.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
-  };
-  const resetMagnetic = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.style.transform = "";
-  };
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = "localbusiness-jsonld";
+    script.innerHTML = JSON.stringify(localBusinessSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const existing = document.getElementById("localbusiness-jsonld");
+      if (existing) document.head.removeChild(existing);
+    };
+  }, []);
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-[#050505] py-24 md:py-36 noise">
-      {/* Background image */}
+    <section id="contact" className="relative overflow-hidden bg-[#050505] py-24 md:py-36 noise border-b border-white/10">
       <div className="absolute inset-0">
         <img
           src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=2000&q=85"
-          alt=""
-          className="h-full w-full object-cover opacity-40"
+          alt="Lightning Siuu Football Academy ground background"
+          className="h-full w-full object-cover opacity-20 pointer-events-none"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent" />
       </div>
-      <div className="absolute inset-0 pitch-lines opacity-30" />
+      <div className="absolute inset-0 pitch-lines opacity-30 pointer-events-none" />
 
       <div className="relative mx-auto max-w-[1440px] px-6 md:px-10">
         <motion.div
@@ -37,73 +58,102 @@ export function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center"
+          className="text-center max-w-3xl mx-auto"
         >
-          <div className="font-cond text-xs uppercase tracking-[0.4em] text-[var(--color-accent)]">
-            Contact
+          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-accent)]/30 bg-[var(--color-accent)]/10 px-4 py-1 font-cond text-xs uppercase tracking-[0.3em] text-[var(--color-accent)]">
+            <LightningIcon className="h-3.5 w-3.5" />
+            <span>CONNECT WITH US</span>
           </div>
-          <h2 className="mt-3 font-display text-6xl leading-[0.9] tracking-tight text-white md:text-[10rem]">
-            READY TO TAKE<br />THE <span className="accent-text">NEXT STEP?</span>
+
+          <h2 className="mt-4 font-display text-4xl leading-[0.92] tracking-tight text-white md:text-7xl">
+            GET IN TOUCH WITH <span className="accent-text">LIGHTNING SIUU.</span>
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-base text-white/65 md:text-lg">
-            Join the academy, book a trial, or get in touch with our coaching team.
+
+          <p className="mt-4 text-base text-white/70 md:text-lg">
+            Have questions regarding player enrollment, trial dates, or training schedules? Reach out directly to academy management.
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <button
-              onMouseMove={handleMagnetic}
-              onMouseLeave={resetMagnetic}
-              className="magnetic shine-btn group inline-flex items-center gap-3 rounded-full bg-[var(--color-accent)] px-7 py-4 font-cond text-xs uppercase tracking-[0.3em] text-black transition hover:shadow-[0_0_30px_rgba(214,255,59,0.4)]"
-            >
-              JOIN THE ACADEMY
-              <span className="transition-transform group-hover:translate-x-1">→</span>
-            </button>
-            <button
-              onMouseMove={handleMagnetic}
-              onMouseLeave={resetMagnetic}
-              className="magnetic shine-btn inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/[0.04] px-7 py-4 font-cond text-xs uppercase tracking-[0.3em] text-white backdrop-blur transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <a
+              href="#trials"
+              className="shine-btn inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-8 py-4 font-cond text-xs uppercase tracking-[0.3em] text-black font-semibold shadow-[0_0_25px_rgba(214,255,59,0.3)] hover:shadow-[0_0_40px_rgba(214,255,59,0.5)] transition"
             >
               BOOK A TRIAL
-            </button>
-            <button
-              onMouseMove={handleMagnetic}
-              onMouseLeave={resetMagnetic}
-              className="magnetic shine-btn inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/[0.04] px-7 py-4 font-cond text-xs uppercase tracking-[0.3em] text-white backdrop-blur transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+              <span>→</span>
+            </a>
+
+            <a
+              href={`https://wa.me/${club.contact.whatsappNumber}?text=${club.contact.whatsappMessage}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shine-btn inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-8 py-4 font-cond text-xs uppercase tracking-[0.3em] text-white backdrop-blur transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
             >
-              CONTACT US
-            </button>
+              WHATSAPP ENQUIRY ↗
+            </a>
+
+            <a
+              href={club.location.googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shine-btn inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-8 py-4 font-cond text-xs uppercase tracking-[0.3em] text-white backdrop-blur transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+            >
+              GOOGLE MAPS LOCATION ↗
+            </a>
           </div>
         </motion.div>
 
-        <div className="mt-20 grid grid-cols-2 gap-4 border-t border-white/10 pt-10 md:grid-cols-4">
-          {items.map((it, i) => (
-            <motion.div
-              key={it.k}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
-            >
-              <div className="font-cond text-[10px] uppercase tracking-[0.3em] text-[var(--color-accent)]">
-                {it.k}
-              </div>
-              <div className="mt-2 text-white/85 md:text-lg">{it.v}</div>
-            </motion.div>
-          ))}
-        </div>
+        {/* Contact Info Cards */}
+        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Card 1: Facility Location */}
+          <div className="metal-hi rounded-2xl border border-white/10 p-6 space-y-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-accent)]/10 text-[var(--color-accent)] border border-[var(--color-accent)]/30 text-lg">
+              📍
+            </div>
+            <div className="font-cond text-xs uppercase tracking-[0.3em] text-[var(--color-accent)]">
+              Training Facility
+            </div>
+            <div className="font-display text-xl text-white">
+              {club.location.facility}
+            </div>
+            <p className="text-xs text-white/65 leading-relaxed">
+              {club.location.address}
+            </p>
+          </div>
 
-        {/* Social */}
-        <div className="mt-10 flex items-center gap-3">
-          <span className="font-cond text-[10px] uppercase tracking-[0.4em] text-white/40">Follow</span>
-          {["Instagram", "X", "YouTube", "TikTok"].map((s) => (
-            <a
-              key={s}
-              href="#"
-              className="metal-hi rounded-full px-3 py-1.5 font-cond text-[10px] uppercase tracking-[0.25em] text-white/70 transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
-            >
-              {s}
-            </a>
-          ))}
+          {/* Card 2: Contact Channels */}
+          <div className="metal-hi rounded-2xl border border-white/10 p-6 space-y-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-accent)]/10 text-[var(--color-accent)] border border-[var(--color-accent)]/30 text-lg">
+              📞
+            </div>
+            <div className="font-cond text-xs uppercase tracking-[0.3em] text-[var(--color-accent)]">
+              Enquiry Channels
+            </div>
+            <div className="text-sm text-white/90 font-mono">
+              Phone: {club.contact.phonePlaceholder}
+            </div>
+            <div className="text-sm text-white/90 font-mono">
+              Email: {club.contact.emailPlaceholder}
+            </div>
+            <p className="text-xs text-white/50">
+              *Editable contact placeholders — updated by academy management.
+            </p>
+          </div>
+
+          {/* Card 3: Served Communities */}
+          <div className="metal-hi rounded-2xl border border-white/10 p-6 space-y-3 sm:col-span-2 lg:col-span-1">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-accent)]/10 text-[var(--color-accent)] border border-[var(--color-accent)]/30 text-lg">
+              🏆
+            </div>
+            <div className="font-cond text-xs uppercase tracking-[0.3em] text-[var(--color-accent)]">
+              Primary Service Area
+            </div>
+            <div className="font-display text-xl text-white">
+              Pimpri-Chinchwad & Pune
+            </div>
+            <p className="text-xs text-white/65 leading-relaxed">
+              Chinchwad, Pimpri, Wakad, Ravet, Nigdi, Akurdi, Tathawade, Punawale, Pimple Saudagar, Pimple Nilakh, Thergaon, Rahatani, Hinjewadi & Bhosari.
+            </p>
+          </div>
         </div>
       </div>
     </section>

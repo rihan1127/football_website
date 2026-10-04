@@ -1,41 +1,12 @@
 import { motion } from "framer-motion";
-import { useInView, useCounter } from "../hooks/useInView";
-
-const stats = [
-  { label: "Age Development", value: "9–18", suffix: "" },
-  { label: "Years Coaching Experience", value: "5+", suffix: "" },
-  { label: "Qualified Coaching", value: "B Licence", suffix: "" },
-  { label: "Coaching Experience", value: "State + National", suffix: "" },
-];
-
-function StatItem({ item }: { item: { label: string; value: string; suffix: string } }) {
-  const { ref, inView } = useInView<HTMLDivElement>();
-  // Treat numeric values like "9–18" or "5+" as strings; animate plain numbers when applicable.
-  const numeric = /^\d+$/.test(item.value);
-  const target = numeric ? parseInt(item.value, 10) : 0;
-  const v = useCounter(target, inView);
-  const display = numeric ? `${v}${item.suffix}` : item.value;
-
-  return (
-    <div ref={ref} className="relative overflow-hidden metal-hi p-6 md:p-8 group hover-lift">
-      <div className="absolute right-0 top-0 h-24 w-24 bg-[radial-gradient(circle,rgba(214,255,59,0.15),transparent_70%)] opacity-0 transition group-hover:opacity-100" />
-      <div className="font-display text-5xl md:text-7xl text-white">
-        {display}
-      </div>
-      <div className="mt-3 h-[2px] w-12 bg-[var(--color-accent)]" />
-      <div className="mt-3 font-cond text-[10px] uppercase tracking-[0.3em] text-white/50 md:text-xs">
-        {item.label}
-      </div>
-    </div>
-  );
-}
+import { club, localAreas } from "../data/site";
+import { LightningIcon } from "./Logo";
 
 export function ClubIntro() {
-  const { ref, inView } = useInView<HTMLDivElement>();
-
   return (
-    <section id="about" className="relative bg-[#050505] py-24 md:py-36 noise">
-      <div className="absolute inset-0 grid-bg-sm opacity-40" />
+    <section id="academy" className="relative bg-[#050505] py-24 md:py-36 noise border-b border-white/10">
+      <div className="absolute inset-0 grid-bg-sm opacity-30" />
+
       {/* Pitch corner marks */}
       <svg className="absolute left-0 top-0 h-32 w-32 opacity-20" viewBox="0 0 100 100">
         <path d="M0,0 L60,0 L60,2 L2,2 L2,60 L0,60 Z" fill="#d6ff3b" />
@@ -45,44 +16,131 @@ export function ClubIntro() {
       </svg>
 
       <div className="relative mx-auto max-w-[1440px] px-6 md:px-10">
-        <div ref={ref} className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        {/* Main H1 & Value Proposition */}
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-start">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="md:col-span-5"
+            className="lg:col-span-6"
           >
-            <div className="font-cond text-xs uppercase tracking-[0.4em] text-[var(--color-accent)]">About the Club</div>
-            <div className="mt-3 mb-6 h-[2px] w-16 bg-[var(--color-accent)]" />
-            <h2 className="font-display text-5xl leading-[0.95] tracking-tight text-white md:text-7xl">
-              MORE THAN TRAINING.<br />
-              A PATHWAY TO THE <span className="accent-text">NEXT LEVEL.</span>
-            </h2>
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-accent)]/30 bg-[var(--color-accent)]/10 px-4 py-1.5 font-cond text-xs uppercase tracking-[0.3em] text-[var(--color-accent)]">
+              <LightningIcon className="h-3.5 w-3.5" />
+              <span>PIMPRI-CHINCHWAD • PUNE</span>
+            </div>
+
+            {/* Exactly ONE H1 Tag on the homepage as required for SEO */}
+            <h1 className="mt-5 font-display text-4xl leading-[0.92] tracking-tight text-white sm:text-5xl md:text-7xl">
+              PREMIUM FOOTBALL ACADEMY IN{" "}
+              <span className="accent-text text-glow">PIMPRI-CHINCHWAD, PUNE.</span>
+            </h1>
+
+            <div className="mt-6 h-[2px] w-20 bg-[var(--color-accent)]" />
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            className="md:col-span-7 md:pt-6"
+            className="lg:col-span-6 space-y-6"
           >
-            <p className="text-lg leading-relaxed text-white/75 md:text-xl">
-              VOLTA FC is an elite football academy developing boys and girls aged 9–18 into well-rounded,
-              technically sharp and tactically intelligent players. We focus on <span className="text-white">long-term player development</span> —
-              not short-term results — building the habits, skills and mindset required for competitive and professional football.
-            </p>
-            <p className="mt-6 text-base leading-relaxed text-white/55 md:text-lg">
-              Our coaches bring 5+ years of professional coaching experience, including State-level and National-level
-              appointments, supported by B Licence qualifications and structured individual development plans.
-              Every player trains inside a system that prepares them for the highest level.
+            <p className="text-lg leading-relaxed text-white/85 md:text-xl font-normal">
+              {club.heroSubtitle}
             </p>
 
-            <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-              {stats.map((s) => (
-                <StatItem key={s.label} item={s} />
-              ))}
+            <p className="text-base leading-relaxed text-white/60 md:text-lg">
+              Headquartered at <strong className="text-white font-semibold">Orchid International School, Chinchwad</strong>,
+              Lightning Siuu Academy focuses on long-term player development rather than short-term results.
+              Under the leadership of Head Coach <strong className="text-white font-semibold">Julekha Salim Bijali</strong> (C Licence Coach, All India Player, National Player & 2x Maharashtra Team Coach),
+              we build fundamental technique, tactical decision-making, physical agility, and competitive confidence.
+            </p>
+
+            <div className="grid grid-cols-2 gap-4 pt-4 sm:grid-cols-3">
+              <div className="metal-hi p-4 rounded-xl border border-white/10">
+                <div className="font-display text-3xl text-[var(--color-accent)]">6–18</div>
+                <div className="mt-1 font-cond text-[10px] uppercase tracking-[0.25em] text-white/50">Age Groups</div>
+              </div>
+              <div className="metal-hi p-4 rounded-xl border border-white/10">
+                <div className="font-display text-3xl text-white">BOYS & GIRLS</div>
+                <div className="mt-1 font-cond text-[10px] uppercase tracking-[0.25em] text-white/50">Equal Coaching</div>
+              </div>
+              <div className="metal-hi p-4 rounded-xl border border-white/10 col-span-2 sm:col-span-1">
+                <div className="font-display text-3xl text-[var(--color-accent)]">C LICENCE</div>
+                <div className="mt-1 font-cond text-[10px] uppercase tracking-[0.25em] text-white/50">Lead Credentials</div>
+              </div>
             </div>
           </motion.div>
+        </div>
+
+        {/* Dedicated Local SEO Section: Serving Pimpri-Chinchwad & Pune */}
+        <div className="mt-24 pt-16 border-t border-white/10">
+          <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <div className="font-cond text-xs uppercase tracking-[0.4em] text-[var(--color-accent)]">
+                Local Presence & Community
+              </div>
+              <h2 className="mt-2 font-display text-4xl leading-[0.95] tracking-tight text-white md:text-6xl">
+                FOOTBALL ACADEMY SERVING <span className="accent-text">PIMPRI-CHINCHWAD & PUNE.</span>
+              </h2>
+            </div>
+            <p className="max-w-md text-sm text-white/60 md:text-base">
+              Conveniently located in Chinchwad, welcoming young players and families across PCMC and Pune communities.
+            </p>
+          </div>
+
+          {/* Local Area Grid */}
+          <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+            {localAreas.map((area, i) => (
+              <motion.div
+                key={area.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.03 }}
+                className="metal-hi group relative overflow-hidden p-4 rounded-xl border border-white/8 hover:border-[var(--color-accent)]/50 transition-all duration-300"
+              >
+                <div className="font-display text-lg tracking-wide text-white group-hover:text-[var(--color-accent)] transition">
+                  {area.name}
+                </div>
+                <div className="mt-1 font-cond text-[9px] uppercase tracking-[0.2em] text-white/40">
+                  {area.dist}
+                </div>
+                <div className="card-line" />
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Location details card */}
+          <div className="mt-10 metal-hi rounded-2xl border border-white/10 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-start gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--color-accent)]/10 text-[var(--color-accent)] border border-[var(--color-accent)]/30">
+                📍
+              </div>
+              <div>
+                <div className="font-cond text-xs uppercase tracking-[0.3em] text-[var(--color-accent)]">
+                  Primary Physical Location
+                </div>
+                <div className="mt-1 font-display text-xl text-white">
+                  {club.location.facility}
+                </div>
+                <p className="mt-1 text-xs text-white/60 max-w-2xl">
+                  {club.location.address}
+                </p>
+              </div>
+            </div>
+
+            <a
+              href={club.location.googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shine-btn shrink-0 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-6 py-3 font-cond text-xs uppercase tracking-[0.25em] text-white transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+            >
+              Open Google Maps
+              <span>↗</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

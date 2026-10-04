@@ -1,28 +1,31 @@
 import { motion } from "framer-motion";
 import { pathway } from "../data/site";
+import { LightningIcon } from "./Logo";
 
 export function Pathway() {
   return (
-    <section id="pathway" className="relative bg-[#0a0a0c] py-24 md:py-36 noise overflow-hidden">
-      <div className="absolute inset-0 pitch-lines opacity-30" />
+    <section id="pathway" className="relative bg-[#0a0a0c] py-24 md:py-36 noise overflow-hidden border-b border-white/10">
+      <div className="absolute inset-0 pitch-lines opacity-30 pointer-events-none" />
+
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
-        <div className="text-center">
-          <div className="font-cond text-xs uppercase tracking-[0.4em] text-[var(--color-accent)]">
-            Player Development Pathway
+        <div className="text-center max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-accent)]/30 bg-[var(--color-accent)]/10 px-4 py-1 font-cond text-xs uppercase tracking-[0.3em] text-[var(--color-accent)]">
+            <LightningIcon className="h-3.5 w-3.5" />
+            <span>PLAYER PROGRESSION</span>
           </div>
-          <h2 className="mt-3 font-display text-5xl leading-[0.95] tracking-tight text-white md:text-7xl">
-            THE <span className="accent-text">VOLTA</span> PATHWAY.
+          <h2 className="mt-4 font-display text-4xl leading-[0.95] tracking-tight text-white md:text-7xl">
+            THE LIGHTNING SIUU <span className="accent-text">PATHWAY.</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm text-white/55 md:text-base">
-            A clear, structured route from grassroots to the professional game.
+          <p className="mt-4 text-sm text-white/60 md:text-base">
+            A clear, structured player development pathway taking players from first discovery to elite match performance.
           </p>
         </div>
 
-        {/* Horizontal animated pathway (desktop) / vertical (mobile) */}
+        {/* Horizontal & Vertical Animated Pathway */}
         <div className="relative mt-16">
-          {/* Connecting animated pitch line */}
+          {/* Desktop Connecting Line */}
           <svg
-            className="pointer-events-none absolute left-0 right-0 top-1/2 hidden h-32 w-full -translate-y-1/2 lg:block"
+            className="pointer-events-none absolute left-0 right-0 top-1/2 hidden h-20 w-full -translate-y-1/2 lg:block"
             viewBox="0 0 1200 100"
             preserveAspectRatio="none"
           >
@@ -31,30 +34,17 @@ export function Pathway() {
               y1="50"
               x2="1160"
               y2="50"
-              stroke="rgba(214,255,59,0.4)"
+              stroke="rgba(214,255,59,0.5)"
               strokeWidth="2"
               strokeDasharray="6 6"
               initial={{ pathLength: 0 }}
               whileInView={{ pathLength: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 2.5, ease: "easeInOut" }}
+              transition={{ duration: 2, ease: "easeInOut" }}
             />
-            {[80, 240, 400, 560, 720, 880, 1040, 1140].map((x, i) => (
-              <motion.circle
-                key={x}
-                cx={x + (i === 5 || i === 6 ? -40 : 60)}
-                cy="50"
-                r="3"
-                fill="#d6ff3b"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + i * 0.2 }}
-              />
-            ))}
           </svg>
 
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-6 lg:gap-2">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-6 lg:gap-3">
             {pathway.map((p, i) => (
               <motion.div
                 key={p.stage}
@@ -64,44 +54,47 @@ export function Pathway() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="relative"
               >
-                <div className="group metal-hi relative overflow-hidden rounded-2xl border border-white/8 p-6 transition hover:border-[var(--color-accent)]/40 hover-lift">
-                  <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-[radial-gradient(circle,rgba(214,255,59,0.15),transparent_70%)] opacity-0 transition group-hover:opacity-100" />
+                <div className="group metal-hi relative overflow-hidden rounded-2xl border border-white/10 p-6 transition-all duration-300 hover:border-[var(--color-accent)]/60 hover:-translate-y-1 h-full flex flex-col justify-between">
+                  <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-[radial-gradient(circle,rgba(214,255,59,0.2),transparent_70%)] opacity-0 transition group-hover:opacity-100" />
 
-                  <div className="font-display text-3xl text-stroke">
-                    0{i + 1}
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-display text-3xl text-stroke font-bold">
+                        0{i + 1}
+                      </span>
+                      <span className="font-cond text-[9px] uppercase tracking-[0.25em] text-[var(--color-accent)] font-semibold">
+                        STAGE {i + 1}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-3 font-display text-2xl tracking-tight text-white md:text-3xl">
+                      {p.stage}
+                    </h3>
+                    <p className="mt-2 text-xs leading-relaxed text-white/65">
+                      {p.note}
+                    </p>
                   </div>
-                  <div className="mt-4 font-cond text-[10px] uppercase tracking-[0.3em] text-[var(--color-accent)]">
-                    Stage {i + 1}
-                  </div>
-                  <div className="mt-1 font-display text-2xl tracking-tight text-white md:text-3xl">
-                    {p.stage.toUpperCase()}
-                  </div>
-                  <div className="mt-3 text-xs leading-relaxed text-white/55">
-                    {p.note}
-                  </div>
-                  <div className="card-line mt-4" />
+
+                  <div className="card-line mt-6" />
                 </div>
 
-                {/* Arrow between (desktop) */}
+                {/* Connecting arrow indicator for mobile */}
                 {i < pathway.length - 1 && (
-                  <div className="absolute -right-2 top-1/2 hidden -translate-y-1/2 text-[var(--color-accent)]/40 lg:block">
-                    →
+                  <div className="my-2 text-center text-[var(--color-accent)] text-lg lg:hidden">
+                    ↓
                   </div>
-                )}
-                {i < pathway.length - 1 && (
-                  <div className="mt-2 text-center text-[var(--color-accent)]/40 lg:hidden">↓</div>
                 )}
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* End badge */}
-        <div className="mt-16 text-center">
-          <div className="metal-hi inline-flex items-center gap-4 rounded-full px-6 py-3">
-            <span className="h-2 w-2 rounded-full bg-[var(--color-accent)]" />
-            <span className="font-cond text-xs uppercase tracking-[0.4em] text-white">
-              End of Pathway — Professional Opportunities
+        {/* Pathway Destination Badge */}
+        <div className="mt-14 text-center">
+          <div className="metal-hi inline-flex items-center gap-3 rounded-full border border-white/15 px-6 py-3">
+            <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
+            <span className="font-cond text-xs uppercase tracking-[0.3em] text-white">
+              Target: Competitive Match Performance & Senior Readiness
             </span>
           </div>
         </div>
